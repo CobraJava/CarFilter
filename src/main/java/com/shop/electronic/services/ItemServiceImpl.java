@@ -1,5 +1,6 @@
 package com.shop.electronic.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shop.electronic.dto.*;
 import com.shop.electronic.entities.*;
 import com.shop.electronic.exceptions.ItemNotFoundException;
@@ -7,13 +8,10 @@ import com.shop.electronic.repositories.ItemRepository;
 import com.shop.electronic.specification.ItemSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,7 +46,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item save(ItemDTO itemDTO,  List<MultipartFile> files) {
+    public Item save(ItemDTO itemDTO,  List<MultipartFile> files) throws IOException {
         List<String> paths = files
                 .stream()
                 .map((picture)->pictureService.save(picture))
@@ -68,7 +66,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item update(ItemDTO itemDTO, Integer id, List<MultipartFile> files) {
+    public Item update(ItemDTO itemDTO, Integer id, List<MultipartFile> files) throws IOException {
 
         List<String> paths = files
                 .stream()
@@ -83,13 +81,18 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.save(updatedItem);
     }
 
-    private Item convertDTO(ItemDTO itemDTO, List<String> paths){
+    private Item convertDTO(ItemDTO itemDTO, List<String> paths) throws IOException {
         System.out.println(itemDTO);
         Category category = categoryService.getById(itemDTO.getCategoryId());
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<LinkedHashMap<String,String>> itemAttributeDTOs = objectMapper.readValue(itemDTO.getItemAttributes(), ArrayList.class);
+
         Map<Integer, String> map = Optional
-                .ofNullable(itemDTO.getItemAttributes()).orElse(new ArrayList<>())
+                .ofNullable(itemAttributeDTOs)
+                .orElse(new ArrayList<>())
                 .stream()
+                .map((itemAttributeDTO)->objectMapper.convertValue(itemAttributeDTO, ItemAttributeDTO.class))
                 .collect(Collectors.toMap(ItemAttributeDTO::getAttributeId, ItemAttributeDTO::getValue));
 
         List<ItemAttribute> itemAttributes = attributeService

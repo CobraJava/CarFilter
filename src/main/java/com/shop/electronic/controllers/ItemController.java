@@ -37,7 +37,7 @@ public class ItemController {
     }
 
     @PutMapping("/{id}")
-    public Item update(@PathVariable Integer id, ItemDTO itemDTO, @RequestParam("files") List<MultipartFile> files ){
+    public Item update(@PathVariable Integer id, ItemDTO itemDTO, @RequestParam("files") List<MultipartFile> files ) throws IOException {
         return itemService.update(itemDTO, id, files);
     }
 

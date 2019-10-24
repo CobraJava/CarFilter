@@ -34,7 +34,7 @@ public class ItemDTO {
     private Integer amount;
 
 
-    private List<ItemAttributeDTO> itemAttributes;
+    private String itemAttributes;
 
     @NotEmpty
     private Integer categoryId;
