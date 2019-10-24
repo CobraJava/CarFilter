@@ -32,13 +32,13 @@ public class ItemController {
     }
 
     @GetMapping
-    public PaginationResponse<Item> findAll(@RequestBody ItemCriteriaRequest itemCriteriaRequest){
+    public PaginationResponse<Item> findAll(ItemCriteriaRequest itemCriteriaRequest){
         return itemService.getAll(itemCriteriaRequest);
     }
 
     @PutMapping("/{id}")
-    public Item update(@PathVariable Integer id, @RequestBody Item item){
-        return itemService.update(item, id);
+    public Item update(@PathVariable Integer id, ItemDTO itemDTO, @RequestParam("files") List<MultipartFile> files ){
+        return itemService.update(itemDTO, id, files);
     }
 
     @DeleteMapping("/{id}")

@@ -68,20 +68,23 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item update(Item item, Integer id) {
-        Item updatedItem = getById(id);
-        updatedItem.setName(item.getName());
-        updatedItem.setDescription(item.getDescription());
-        updatedItem.setAmount(item.getAmount());
-        updatedItem.setPrice(item.getPrice());
-        updatedItem.setPictures(item.getPictures());
-        updatedItem.setItemAttributes(item.getItemAttributes());
-        updatedItem.setCategory(item.getCategory());
-        return updatedItem;
+    public Item update(ItemDTO itemDTO, Integer id, List<MultipartFile> files) {
+
+        List<String> paths = files
+                .stream()
+                .map((picture)->pictureService.save(picture))
+                .collect(Collectors.toList());
+
+        Item oldItem = getById(id);
+
+        Item updatedItem = convertDTO(itemDTO, paths);
+        updatedItem.setId(oldItem.getId());
+
+        return itemRepository.save(updatedItem);
     }
 
     private Item convertDTO(ItemDTO itemDTO, List<String> paths){
-
+        System.out.println(itemDTO);
         Category category = categoryService.getById(itemDTO.getCategoryId());
 
         Map<Integer, String> map = Optional

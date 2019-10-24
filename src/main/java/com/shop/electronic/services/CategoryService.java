@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CategoryService {
 
-    PaginationResponse<Category> getAll(PaginationRequest paginationRequest);
+    List<Category> getAll();
 
     Category save(Category category);
 

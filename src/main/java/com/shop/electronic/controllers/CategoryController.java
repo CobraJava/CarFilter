@@ -23,8 +23,8 @@ public class CategoryController {
     public Category create(@RequestBody Category category) { return categoryService.save(category);}
 
     @GetMapping
-    public PaginationResponse<Category> findAll(PaginationRequest paginationRequest) {
-        return categoryService.getAll(paginationRequest);
+    public List<Category> findAll() {
+        return categoryService.getAll();
     }
 
     @PutMapping("/{id}")
