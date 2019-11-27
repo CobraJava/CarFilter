@@ -68,6 +68,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item update(ItemDTO itemDTO, Integer id, List<MultipartFile> files) throws IOException {
 
+
         List<String> paths = files
                 .stream()
                 .map((picture)->pictureService.save(picture))
