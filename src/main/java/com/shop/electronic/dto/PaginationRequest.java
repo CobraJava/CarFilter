@@ -6,6 +6,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import static org.springframework.data.domain.PageRequest.*;
+
 @Getter
 @Setter
 public class PaginationRequest {
@@ -15,6 +17,6 @@ public class PaginationRequest {
     private Integer size = 20;
 
     public Pageable toPageable() {
-        return PageRequest.of(page, size, direction, fieldName);
+        return of(page, size, direction, fieldName);
     }
 }

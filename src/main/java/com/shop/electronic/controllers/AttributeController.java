@@ -4,6 +4,7 @@ import com.shop.electronic.entities.Attribute;
 import com.shop.electronic.services.AttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class AttributeController {
     public AttributeController(AttributeService attributeService) { this.attributeService = attributeService; }
 
     @PostMapping
-    public Attribute create(@RequestBody Attribute attribute) { return attributeService.save(attribute);}
+    public Attribute create(@RequestBody @Validated Attribute attribute) { return attributeService.save(attribute);}
 
     @GetMapping
     public List<Attribute> findAll() { return attributeService.getAll(); }

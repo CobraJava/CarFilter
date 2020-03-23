@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '1.5.6.RELEASE'
+    id 'org.springframework.boot' version '2.1.8.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'java'
 }
@@ -19,16 +19,17 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.1.8.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.1.8.RELEASE'
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.modelmapper:modelmapper:1.1.0'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     implementation 'io.jsonwebtoken:jjwt:0.7.0'
     compileOnly 'org.projectlombok:lombok'
-    implementation 'com.cloudinary', name: 'cloudinary-http44', version: '1.2.0'
-    implementation 'com.cloudinary', name: 'cloudinary-taglib', version: '1.0.14'
+    implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+    implementation group:'com.cloudinary', name: 'cloudinary-http44', version: '1.2.0'
+    implementation group:'com.cloudinary', name: 'cloudinary-taglib', version: '1.0.14'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
