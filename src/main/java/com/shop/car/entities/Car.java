@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Item {
+public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,13 +34,13 @@ public class Item {
     private Integer amount;
 
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "item_id")
+    @JoinColumn(name = "car_id")
     private List<Picture> pictures = new ArrayList<>();
 
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "item_id")
-    private List<ItemAttribute> itemAttributes = new ArrayList<>();
+    @JoinColumn(name = "car_id")
+    private List<CarAttribute> carAttributes = new ArrayList<>();
 
     @OneToOne
-    private Category category;
+    private Brand brand;
 }

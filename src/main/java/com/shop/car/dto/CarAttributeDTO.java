@@ -9,7 +9,7 @@ import javax.validation.constraints.NotEmpty;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemAttributeDTO {
+public class CarAttributeDTO {
 
     private Integer attributeId;
 

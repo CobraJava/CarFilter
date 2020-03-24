@@ -1,4 +1,4 @@
-CREATE TABLE category
+CREATE TABLE brand
 (
     id int not null AUTO_INCREMENT,
     name varchar(100) not null,
@@ -12,35 +12,35 @@ CREATE TABLE attribute
     PRIMARY KEY (id)
 );
 
-CREATE TABLE item
+CREATE TABLE car
 (
     id int not null AUTO_INCREMENT,
     name varchar(200) not null,
     description varchar(1000),
     price float not null,
     amount int default 0,
-    category_id int not null,
+    brand_id int not null,
     PRIMARY KEY (id),
-    FOREIGN KEY (category_id) REFERENCES category(id)
+    FOREIGN KEY (brand_id) REFERENCES brand(id)
 );
 
 CREATE TABLE picture
 (
     id int not null AUTO_INCREMENT,
     url varchar(300) not null,
-    item_id int,
+    car_id int,
     primary key (id),
-    foreign key (item_id) references item(id)
+    foreign key (car_id) references car(id)
 );
 
-CREATE TABLE item_attribute
+CREATE TABLE car_attribute
 (
     id int not null auto_increment,
-    item_id int,
+    car_id int,
     attribute_id int not null,
     value varchar(100),
     primary key (id),
-    foreign key (item_id) references item(id),
+    foreign key (car_id) references car(id),
     foreign key (attribute_id) references attribute(id)
 )
 

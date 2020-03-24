@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemDTO {
+public class CarDTO {
 
 
 
@@ -23,7 +23,7 @@ public class ItemDTO {
     private Integer amount;
 
 
-    private String itemAttributes;
+    private String carAttributes;
 
     private Integer categoryId;
 

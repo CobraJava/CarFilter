@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ItemCriteriaRequest extends PaginationRequest {
+public class CarCriteriaRequest extends PaginationRequest {
     private Float minPrice;
     private Float maxPrice;
     private Integer categoryId;
