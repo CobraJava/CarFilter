@@ -5,11 +5,12 @@ import com.shop.car.dto.*;
 import com.shop.car.entities.*;
 import com.shop.car.exceptions.CarNotFoundException;
 import com.shop.car.repositories.CarRepository;
-import com.shop.car.specification.ItemSpecification;
+import com.shop.car.specification.CarSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import sun.security.krb5.internal.PAData;
 
 import java.io.IOException;
 import java.util.*;
@@ -27,17 +28,40 @@ public class CarServiceImpl implements CarService {
 
     private  PictureService pictureService;
 
+    private BodyStyleService bodyStyleService;
+
+    private DriveTrainService driveTrainService;
+
+    private FuelTypeService fuelTypeService;
+
+    private PassengersCapacityService passengersCapacityService;
+
+    private TransmissionService transmissionService;
+
     @Autowired
-    public CarServiceImpl(CarRepository carRepository, BrandService brandService, AttributeService attributeService, PictureService pictureService) {
+    public CarServiceImpl(CarRepository carRepository,
+                          BrandService brandService,
+                          AttributeService attributeService,
+                          PictureService pictureService,
+                          BodyStyleService bodyStyleService,
+                          DriveTrainService driveTrainService,
+                          FuelTypeService fuelTypeService,
+                          PassengersCapacityService passengersCapacityService,
+                          TransmissionService transmissionService) {
         this.carRepository = carRepository;
         this.brandService = brandService;
         this.attributeService = attributeService;
         this.pictureService = pictureService;
+        this.bodyStyleService = bodyStyleService;
+        this.driveTrainService = driveTrainService;
+        this.fuelTypeService = fuelTypeService;
+        this.passengersCapacityService = passengersCapacityService;
+        this.transmissionService = transmissionService;
     }
 
     @Override
     public PaginationResponse<Car> getAll(CarCriteriaRequest carCriteriaRequest) {
-        Page<Car> page = carRepository.findAll(new ItemSpecification(carCriteriaRequest), carCriteriaRequest.toPageable());
+        Page<Car> page = carRepository.findAll(new CarSpecification(carCriteriaRequest), carCriteriaRequest.toPageable());
         return new PaginationResponse<>(
                 page.getTotalPages(),
                 page.getTotalElements(),
@@ -84,7 +108,15 @@ public class CarServiceImpl implements CarService {
 
     private Car convertDTO(CarDTO carDTO, List<String> paths) throws IOException {
         System.out.println(carDTO);
-        Brand brand = brandService.getById(carDTO.getCategoryId());
+        Brand brand = brandService.getById(carDTO.getBrandId());
+        BodyStyle bodyStyle = bodyStyleService.getById(carDTO.getBodyStyleId());
+        DriveTrain driveTrain = driveTrainService.getById(carDTO.getDriveTrainId());
+        FuelType fuelType = fuelTypeService.getById(carDTO.getFuelTypeId());
+        PassengersCapacity passengersCapacity = passengersCapacityService.getById(carDTO.getPassengersCapacityId());
+        Transmission transmission = transmissionService.getById(carDTO.getPassengersCapacityId());
+
+
+
 
         ObjectMapper objectMapper = new ObjectMapper();
         List<LinkedHashMap<String,String>> carAttributeDTOs = objectMapper.readValue(carDTO.getCarAttributes(), ArrayList.class);
@@ -122,9 +154,13 @@ public class CarServiceImpl implements CarService {
         car.setDescription(carDTO.getDescription());
         car.setBrand(brand);
         car.setPrice(carDTO.getPrice());
-        car.setAmount(carDTO.getAmount());
         car.setCarAttributes(carAttributes);
         car.setPictures(pictures);
+        car.setBodyStyle(bodyStyle);
+        car.setDriveTrain(driveTrain);
+        car.setFuelType(fuelType);
+        car.setPassengersCapacity(passengersCapacity);
+        car.setTransmission(transmission);
 
         return car;
     }

@@ -30,9 +30,6 @@ public class Car {
     @PositiveOrZero
     private Float price;
 
-    @PositiveOrZero
-    private Integer amount;
-
     @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "car_id")
     private List<Picture> pictures = new ArrayList<>();
@@ -43,4 +40,22 @@ public class Car {
 
     @OneToOne
     private Brand brand;
+
+    @OneToOne
+    private PassengersCapacity passengersCapacity;
+
+    @OneToOne
+    private BodyStyle bodyStyle;
+
+    @OneToOne
+    private DriveTrain driveTrain;
+
+    @OneToOne
+    private Transmission transmission;
+
+    @OneToOne
+    private FuelType fuelType;
+
+
+
 }

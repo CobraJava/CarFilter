@@ -10,22 +10,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CarDTO {
 
-
-
-
     private String name;
-
 
     private String description;
 
     private Float price;
 
-    private Integer amount;
-
-
     private String carAttributes;
 
-    private Integer categoryId;
+    private Integer brandId;
+
+    private Integer bodyStyleId;
+
+    private Integer driveTrainId;
+
+    private Integer fuelTypeId;
+
+    private Integer passengersCapacityId;
+
+    private Integer transmissionId;
 
 
 }

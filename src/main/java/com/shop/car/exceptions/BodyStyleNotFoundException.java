@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class AttributeNotFoundException extends RuntimeException
-{
-    public AttributeNotFoundException(Integer id) { super("Attribute with ID = " + id + "not found"); }
+public class BodyStyleNotFoundException extends RuntimeException {
+    public BodyStyleNotFoundException(Integer id) { super("BodyStyle with ID = " + id + "not found"); }
 }
